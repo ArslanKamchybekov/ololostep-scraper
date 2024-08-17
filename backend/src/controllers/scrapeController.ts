@@ -1,5 +1,7 @@
 // src/controllers/scrapeController.ts
 import { Request, Response } from 'express';
+import axios from 'axios';
+import cheerio from 'cheerio';
 import ScrapedData from '../models/ScrapedData';
 
 export const scrapeWebsite = async (req: Request, res: Response) => {
@@ -9,6 +11,21 @@ export const scrapeWebsite = async (req: Request, res: Response) => {
     }
 
     try {
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+
+        const title = $('title').text();
+        const description = $('meta[name="description"]').attr('content');
+
+        const scrapedData = new ScrapedData({
+            url,
+            title,
+            description,
+            dateScraped: new Date(),
+        });
+
+        await scrapedData.save();
+        return res.status(200).json(scrapedData);
         
     } catch (error) {
         console.error(error);
