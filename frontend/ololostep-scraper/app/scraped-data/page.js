@@ -12,15 +12,21 @@ const ScrapedPage = () => {
             try {
                 if (session) {
                     const token = await session.getToken();
+                    const sessionId = session.id;
 
                     const response = await fetch('http://localhost:4000/api/data', {
                         headers: {
-                            Authorization: `Bearer ${token}`,
+                            Authorization: `Bearer ${token}`, 
+                            'X-Session-Id': sessionId, 
                         },
                     });
 
-                    // Set the data in the state
-                    setScrapedData(response.data);
+                    if (response.ok) {
+                        const data = await response.json();
+                        setScrapedData(data); 
+                    } else {
+                        console.error('Failed to fetch scraped data:', response.statusText);
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching scraped data:', error);
@@ -49,3 +55,5 @@ const ScrapedPage = () => {
         </div>
     );
 }
+
+export default ScrapedPage;
