@@ -14,10 +14,10 @@ const ScrapedPage = () => {
   useEffect(() => {
         const fetchData = async () => {
         try {
-            const token = await getToken();
+            //const token = await getToken();
             const response = await fetch('http://localhost:4000/api/my-data', {
                 headers: {
-                'Authorization': `Bearer ${token}`,
+                //'Authorization': `Bearer ${token}`,
                 },
             });
 

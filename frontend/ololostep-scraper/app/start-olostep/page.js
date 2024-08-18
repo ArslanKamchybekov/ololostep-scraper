@@ -103,7 +103,7 @@ export default function StartOlostep() {
             <p className="mt-10 text-sm font-bold">ALL INFO YOU NEED. RIGHT ON ONE PAGE.</p>
           </div>
         </div>
-        <p className="text-center text-gray-300 mb-6">Just enter the URL you want to scrape, click send, and you're all set!</p>
+        <p className="text-center text-gray-300 mb-6">Just enter the URL you want to scrape, click send, and you are all set!</p>
         <div className="flex flex-col items-center">
           <input
             type="text"

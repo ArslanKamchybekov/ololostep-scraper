@@ -44,7 +44,7 @@ const Navbar = () => {
                     : "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
                 }`}
               >
-                Scrap
+                Scrape
               </Button>
             </Link>
 
