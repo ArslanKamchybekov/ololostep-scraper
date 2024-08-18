@@ -7,29 +7,26 @@ interface AuthenticatedRequest extends Request {
   userId?: string;
 }
 
-export const verifyClerkSession = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-  const authorizationHeader = req.headers.authorization;
-  const sessionId = req.headers['x-session-id'];  // Assuming sessionId is sent as a custom header
-
-  if (!authorizationHeader || !sessionId) {
-    return res.status(401).json({ message: 'Missing session or token' });
-  }
-
-  const token = authorizationHeader.split(' ')[1]; // Extract the token from the Bearer scheme
-
+const verifyClerkSession = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    // Verify the session using Clerk's session verification function
-    const session = await clerk.sessions.verifySession(sessionId as string, token);
+    const token = req.headers.authorization?.split(" ")[1];  // Extract token from the Authorization header
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    const sessionId = token.split(" ")[1];  // Extract session ID from the token
+
+    const session = await clerk.sessions.verifySession(sessionId, token)// Verify token using Clerk's client
 
     if (!session || !session.userId) {
-      return res.status(401).json({ message: 'Invalid session' });
+      return res.status(401).json({ error: "Invalid session" });
     }
 
-    // Attach the userId to the request object for further use
-    req.userId = session.userId;
+    req.userId = session.userId as string;  // Attach userId to the request object for further use
     next();
   } catch (error) {
-    console.error('Session verification failed:', error);
-    return res.status(401).json({ message: 'Unauthorized' });
+    console.error("Error verifying session:", error);
+    return res.status(401).json({ error: "Unauthorized" });
   }
 };
+
+export { verifyClerkSession };
