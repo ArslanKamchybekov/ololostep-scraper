@@ -9,8 +9,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/"
+        "dest": "/index.ts"
       }
-    ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+    ]
 }
