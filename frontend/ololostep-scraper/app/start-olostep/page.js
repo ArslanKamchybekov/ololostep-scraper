@@ -60,7 +60,7 @@ export default function StartOlostep() {
       <div className="w-1/3 flex flex-col items-center justify-center p-8 space-y-4 h-full">
         <div className="mb-14">
           <div className="text-center">
-            <h1 className="text-6xl font-bold">Olostep.</h1>
+            <h1 className="text-6xl font-bold">OloScraper</h1>
             <p className="mt-10 text-sm font-bold">ALL INFO YOU NEED. RIGHT ON ONE PAGE.</p>
           </div>
         </div>
