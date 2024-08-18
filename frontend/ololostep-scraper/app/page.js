@@ -9,7 +9,7 @@ export default function Home() {
         Welcome to Olostep Scraper
       </h1>
       <h2 className="text-xl sm:text-2xl md:text-3xl mb-8 sm:mb-10 md:mb-12 dark:text-white text-black">
-      Your one-stop solution for extracting and managing <br /> web data effortlessly.
+        Your one-stop solution for extracting and managing <br /> web data effortlessly.
       </h2>
       <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
         <Link href="/sign-up">
@@ -25,9 +25,11 @@ export default function Home() {
         <Link href="/contact-us">
           <Button className="px-6 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-purple-400 to-purple-600 text-white rounded-full shadow-lg hover:from-purple-500 hover:to-purple-700 transition duration-300 ease-in-out">
             Contact Us
+          </Button>
+        </Link>
         <Link href="/start-ololostep">
           <Button className="px-6 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-yellow-400 to-red-500 text-gray-800 dark:text-gray-200 rounded-full shadow-lg hover:from-yellow-500 hover:to-red-600 dark:shadow-yellow-900 transition duration-300 ease-in-out">
-          Start Ololostep
+            Start Ololostep
           </Button>
         </Link>
       </div>
