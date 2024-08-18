@@ -118,12 +118,6 @@ export default function StartOlostep() {
           >
             Scrape
           </Button>
-          <Button
-            onClick={handleSave}
-            className="bg-blue-800 text-white p-3 rounded-lg hover:bg-blue-500 transition-colors mb-4"
-          >
-            Save
-          </Button>
         </div>
       </div>
 
