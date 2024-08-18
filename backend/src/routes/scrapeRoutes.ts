@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { scrapeWebsite, getUserScrapedData } from '../controllers/scrapeController';
-import { clerkAuth, getUserId } from '../middleware/clerkMiddleware';
+import { verifyClerkSession } from '../middleware/clerkMiddleware';
 
 const router = Router();
 
-router.post('/scrape', clerkAuth, getUserId, scrapeWebsite);
-router.get('/data', clerkAuth, getUserId, getUserScrapedData);
+router.post('/scrape', verifyClerkSession, scrapeWebsite);
+router.get('/data', verifyClerkSession, getUserScrapedData);
 
 export default router;

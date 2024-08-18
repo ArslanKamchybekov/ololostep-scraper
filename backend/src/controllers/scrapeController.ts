@@ -1,9 +1,13 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import ScrapedData from '../models/ScrapedData';
 
-export const scrapeWebsite = async (req: Request, res: Response) => {
+interface AuthenticatedRequest extends Request {
+    userId?: string;
+}
+
+export const scrapeWebsite = async (req: AuthenticatedRequest, res: Response) => {
     const { url } = req.body;
     const userId = req.userId;
 
@@ -21,7 +25,7 @@ export const scrapeWebsite = async (req: Request, res: Response) => {
         const title = $('head > title').text();
         const description = $('meta[name="description"]').attr('content') || '';
 
-        // Store the scraped data in MongoDB
+        // Store the scraped data in MongoDB, associated with the user
         const scrapedData = new ScrapedData({ url, title, description, user: userId });
         await scrapedData.save();
 
@@ -33,8 +37,8 @@ export const scrapeWebsite = async (req: Request, res: Response) => {
     }
 };
 
-export const getUserScrapedData = async (req: Request, res: Response) => {
-    const userId = req.userId;
+export const getUserScrapedData = async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.userId; // Extracted from Clerk session
 
     try {
         const data = await ScrapedData.find({ user: userId }).sort({ dateScraped: -1 });
