@@ -20,6 +20,8 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Navbar />
+            <br />
+            <br />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
               {children}
             </main>

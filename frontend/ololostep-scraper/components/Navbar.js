@@ -15,11 +15,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`flex items-center justify-between p-4 shadow-md lg:px-32 md:px-12 sm:px-6 ${
+      className={`fixed top-0 left-0 w-full flex items-center justify-between p-4 shadow-md ${
         theme === "light"
           ? "bg-gradient-to-r from-purple-200 via-pink-200 to-yellow-200 text-gray-800"
           : "bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white"
-      } relative`}
+      } z-50`}
     >
       <Link href="/" className="flex items-center space-x-4">
         <Book
@@ -32,6 +32,21 @@ const Navbar = () => {
 
       <div className="flex items-center gap-3">
         <ModeToggle />
+
+        {isSignedIn && (
+          <Link href="/my-data">
+            <Button
+              variant="outline"
+              className={`${
+                theme === "light"
+                  ? "bg-white text-black border-white transition-colors hover:bg-gray-100"
+                  : "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+              }`}
+            >
+              My Data
+            </Button>
+          </Link>
+        )}
 
         {!isSignedIn ? (
           <Link href="/sign-in">
@@ -90,14 +105,28 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden absolute top-16 right-0 w-48 bg-gradient-to-r from-gray-800 to-gray-700 text-white shadow-lg p-4 rounded-lg z-10 overflow-y-auto">
+          {isSignedIn && (
+            <Link href="/my-data">
+              <Button
+                variant="outline"
+                className={`${
+                  theme === "light"
+                    ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+                    : "bg-white text-black border-white hover:bg-gray-200"
+                }`}
+              >
+                My Data
+              </Button>
+            </Link>
+          )}
           {!isSignedIn ? (
             <Link href="/sign-in">
               <Button
                 variant="outline"
                 className={`transition-colors ${
                   theme === "light"
-                    ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-700" // CHANGED: Styling for light mode
-                    : "bg-white text-black border-white hover:bg-gray-200" // CHANGED: Retained original styling for dark mode
+                    ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+                    : "bg-white text-black border-white hover:bg-gray-200"
                 }`}
               >
                 Login
