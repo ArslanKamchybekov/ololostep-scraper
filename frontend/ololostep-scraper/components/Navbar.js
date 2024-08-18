@@ -27,7 +27,7 @@ const Navbar = () => {
             theme === "light" ? "text-gray-800" : "text-white"
           }`}
         />
-        <span className="text-xl font-bold">Ololostep-Scraper</span>
+        <span className="text-xl font-bold">Olostep</span>
       </Link>
 
       <div className="flex items-center gap-3">
