@@ -24,11 +24,14 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/server.ts",
+    "start": "ts-node index.ts",
     "build": "tsc",
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon index.ts"
   },
   "keywords": [],
   "author": "",
