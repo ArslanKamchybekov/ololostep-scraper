@@ -6,4 +6,9 @@
 /* Ensure you have dark mode enabled */
 @media (prefers-color-scheme: dark) {
   /* Apply dark theme styles here */
+  .dark {
+    --tw-bg-opacity: 1;
+    background-color: black; /* Example dark background */
+    color: white; /* Example dark text color */
+  }
 }
