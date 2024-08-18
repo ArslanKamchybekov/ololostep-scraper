@@ -34,18 +34,33 @@ const Navbar = () => {
         <ModeToggle />
 
         {isSignedIn && (
-          <Link href="/my-data">
-            <Button
-              variant="outline"
-              className={`${
-                theme === "light"
-                  ? "bg-white text-black border-white transition-colors hover:bg-gray-100"
-                  : "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
-              }`}
-            >
-              My Data
-            </Button>
-          </Link>
+          <>
+            <Link href="/start-olostep">
+              <Button
+                variant="outline"
+                className={`${
+                  theme === "light"
+                    ? "bg-white text-black border-white transition-colors hover:bg-gray-100"
+                    : "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+                }`}
+              >
+                Scrap
+              </Button>
+            </Link>
+
+            <Link href="/my-data">
+              <Button
+                variant="outline"
+                className={`${
+                  theme === "light"
+                    ? "bg-white text-black border-white transition-colors hover:bg-gray-100"
+                    : "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+                }`}
+              >
+                My Data
+              </Button>
+            </Link>
+          </>
         )}
 
         {!isSignedIn ? (
@@ -106,18 +121,32 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="lg:hidden absolute top-16 right-0 w-48 bg-gradient-to-r from-gray-800 to-gray-700 text-white shadow-lg p-4 rounded-lg z-10 overflow-y-auto">
           {isSignedIn && (
-            <Link href="/my-data">
-              <Button
-                variant="outline"
-                className={`${
-                  theme === "light"
-                    ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
-                    : "bg-white text-black border-white hover:bg-gray-200"
-                }`}
-              >
-                My Data
-              </Button>
-            </Link>
+            <>
+              <Link href="/start-scraping">
+                <Button
+                  variant="outline"
+                  className={`${
+                    theme === "light"
+                      ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+                      : "bg-white text-black border-white hover:bg-gray-200"
+                  }`}
+                >
+                  Start Scraping
+                </Button>
+              </Link>
+              <Link href="/my-data">
+                <Button
+                  variant="outline"
+                  className={`${
+                    theme === "light"
+                      ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-700"
+                      : "bg-white text-black border-white hover:bg-gray-200"
+                  }`}
+                >
+                  My Data
+                </Button>
+              </Link>
+            </>
           )}
           {!isSignedIn ? (
             <Link href="/sign-in">
