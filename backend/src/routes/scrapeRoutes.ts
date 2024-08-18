@@ -3,7 +3,7 @@ import { scrapeWebsite, getUserScrapedData } from '../controllers/scrapeControll
 
 const router = express.Router();
 
-router.post('/scrape', scrapeWebsite);  // Endpoint for scraping
-router.get('/my-data', getUserScrapedData);  // Endpoint for getting user's scraped data
+router.post('/scrape', scrapeWebsite);
+router.get('/my-data', getUserScrapedData);
 
 export default router;
