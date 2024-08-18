@@ -1,8 +1,11 @@
 'use client'
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";  // Import Clerk's useUser hook
 
 export default function Home() {
+  const { isSignedIn } = useUser();  // Check if the user is signed in
+
   return (
     <section className="text-center mt-12 sm:mt-16 md:mt-20 mb-12 sm:mb-16 md:mb-20">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 md:mb-8 text-purple-800 dark:text-purple-600 light:text-purple-700" style={{ textShadow: '0 0 10px purple' }}>
@@ -27,11 +30,13 @@ export default function Home() {
             Contact Us
           </Button>
         </Link>
-        <Link href="/start-olostep">
-          <Button className="px-6 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full shadow-lg hover:from-purple-700 hover:to-purple-900 transition duration-300 ease-in-out shadow-lg shadow-purple-500">
-            Start Olostep
-          </Button>
-        </Link>
+        {isSignedIn && (  // Only show this button if the user is signed in
+          <Link href="/start-olostep">
+            <Button className="px-6 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full shadow-lg hover:from-purple-700 hover:to-purple-900 transition duration-300 ease-in-out shadow-lg shadow-purple-500">
+              Start Olostep
+            </Button>
+          </Link>
+        )}
       </div>
     </section>
   );
