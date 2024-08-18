@@ -7,28 +7,6 @@ interface AuthenticatedRequest extends Request {
     userId?: string;
 }
 
-// Saves the scraped data
-export const saveScrapedData = async (req: AuthenticatedRequest, res: Response) => {
-    const { title, description, url } = req.body;
-    const userId = req.userId;
-
-    if (!title || !description || !url) {
-        return res.status(400).json({ message: 'Title, description, and URL are required' });
-    }
-
-    try {
-        // Store the scraped data in MongoDB, associated with the user
-        const scrapedData = new ScrapedData({ title, description, url, user: userId });
-        await scrapedData.save();
-
-        // Return a success message
-        return res.status(201).json({ message: 'Data saved successfully' });
-    } catch (error: any) {
-        console.error('Error saving data:', error.message);
-        return res.status(500).json({ message: 'Failed to save data' });
-    }
-};
-
 export const scrapeWebsite = async (req: AuthenticatedRequest, res: Response) => {
   const { url } = req.body;
   const userId = req.userId;

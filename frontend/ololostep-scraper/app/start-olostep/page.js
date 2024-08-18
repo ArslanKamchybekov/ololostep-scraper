@@ -31,7 +31,7 @@ export default function StartOlostep() {
         throw new Error('No token found');
       }
 
-      const response = await fetch('http://localhost:4000/api/scrape', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/scrape`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export default function StartOlostep() {
         throw new Error('No token found');
       }
 
-      const response = await fetch('http://localhost:4000/api/save', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

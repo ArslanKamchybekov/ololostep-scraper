@@ -15,7 +15,7 @@ const ScrapedPage = () => {
         const fetchData = async () => {
         try {
             //const token = await getToken();
-            const response = await fetch('http://localhost:4000/api/my-data', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-data`, {
                 headers: {
                 //'Authorization': `Bearer ${token}`,
                 },
