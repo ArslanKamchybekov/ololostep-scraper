@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -21,9 +22,9 @@ export default function Home() {
             Learn More
           </Button>
         </Link>
-        <Link href="/contact">
+        <Link href="/start-ololostep">
           <Button className="px-6 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-yellow-400 to-red-500 text-gray-800 dark:text-gray-200 rounded-full shadow-lg hover:from-yellow-500 hover:to-red-600 dark:shadow-yellow-900 transition duration-300 ease-in-out">
-            Contact Us
+          Start Ololostep
           </Button>
         </Link>
       </div>
