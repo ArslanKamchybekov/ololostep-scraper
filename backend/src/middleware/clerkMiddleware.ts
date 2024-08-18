@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { createClerkClient } from '@clerk/clerk-sdk-node';
 
+// Initialize the Clerk client
 const clerk = createClerkClient({ secretKey: process.env.CLERK_API_KEY });
 
 interface AuthenticatedRequest extends Request {
@@ -9,23 +10,29 @@ interface AuthenticatedRequest extends Request {
 
 const verifyClerkSession = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];  // Extract token from the Authorization header
-    if (!token) {
-      return res.status(401).json({ error: "Unauthorized" });
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader) {
+      return res.status(401).json({ error: "Unauthorized: No authorization header" });
     }
-    const sessionId = token.split(" ")[1];  // Extract session ID from the token
 
-    const session = await clerk.sessions.verifySession(sessionId, token)// Verify token using Clerk's client
+    const sessionToken = authorizationHeader.replace("Bearer ", "");
+    console.log("Session token:", sessionToken);
+
+    // Extract sessionId from cookies or other means
+    console.log("Session ID:", req.cookies.session_id);
+
+    // Verify the session using Clerk's client
+    const session = await clerk.sessions.verifySession(req.cookies.session_id, sessionToken);
 
     if (!session || !session.userId) {
-      return res.status(401).json({ error: "Invalid session" });
+      return res.status(401).json({ error: "Unauthorized: Invalid session" });
     }
 
     req.userId = session.userId as string;  // Attach userId to the request object for further use
     next();
   } catch (error) {
     console.error("Error verifying session:", error);
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ error: "Unauthorized: Error verifying session" });
   }
 };
 

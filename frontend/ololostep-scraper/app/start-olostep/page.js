@@ -1,77 +1,66 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useAuth, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { CircularProgress } from '@mui/material';
-import { useTheme } from 'next-themes';
-import { useUser } from '@clerk/nextjs'; // Use Clerk's hook
 
 export default function StartOlostep() {
-  const { theme } = useTheme();
-  const [clientTheme, setClientTheme] = useState(theme);
-  const [originalButtonColor, setOriginalButtonColor] = useState("");
-  const [url, setUrl] = useState("");
+  const { user, isSignedIn } = useUser(); // Use the hook here
+  const { getToken } = useAuth(); // Get token method from useAuth
+  const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useUser();
-  console.log("User Object:", user); // Use Clerk's user object
-  const [scrapedData, setScrapedData] = useState("");
-  const [output, setOutput] = useState("");
-  const [buttonColor, setButtonColor] = useState(theme === "light" ? "bg-gray-600" : "bg-white");
-
-  useEffect(() => {
-    setClientTheme(theme);
-    setOriginalButtonColor(theme === "light" ? "bg-gray-600" : "bg-white");
-    setButtonColor(theme === "light" ? "bg-gray-600" : "bg-white");
-  }, [theme]);
+  const [scrapedData, setScrapedData] = useState('');
+  const [output, setOutput] = useState('');
 
   const handleUrlChange = (e) => {
     setUrl(e.target.value);
   };
 
   const handleScrape = async () => {
-    const { user } = useUser();
-    const sessionToken = user?.session?.id;
-  
-    if (!sessionToken) {
-      console.error("User is not authenticated or no valid session token found");
-      setOutput("Please log in to use this feature.");
+    if (!isSignedIn) {
+      setOutput('You need to sign in to use this feature.');
       return;
     }
-  
+
+    setIsLoading(true);
+
     try {
-      const response = await fetch("http://localhost:4000/api/scrape", {
-        method: "POST",
+      const token = await getToken(); // Retrieve token from Clerk
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const response = await fetch('http://localhost:4000/api/scrape', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Include token in the Authorization header
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url }), // Send the URL to scrape
       });
-  
+
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
       setScrapedData(data);
-      setOutput(data.extractedText || "No text found.");
+      setOutput(data.extractedText || 'No text found.'); // Update the output with scraped data
     } catch (error) {
-      console.error("Error fetching scraped data:", error);
-      setOutput("Failed to scrape the URL. Please try again.");
+      console.error('Error fetching scraped data:', error);
+      setOutput('Failed to scrape the URL. Please try again.');
     } finally {
       setIsLoading(false);
-      setButtonColor(originalButtonColor);
     }
   };
-  
+
   return (
-    <div className={`flex h-screen w-full overflow-hidden ${clientTheme}`}>
+    <div className="flex h-screen w-full overflow-hidden">
       {/* Left Side */}
       <div className="w-1/3 flex flex-col items-center justify-center p-8 space-y-4 h-full">
         <div className="mb-14">
           <div className="text-center">
-            <h1 className="text-6xl font-bold" style={{ textShadow: clientTheme === "dark" ? "0 0 10px white" : "0 0 10px rgba(0, 0, 0, 0.7)" }}>
-              Olostep.
-            </h1>
+            <h1 className="text-6xl font-bold">Olostep.</h1>
             <p className="mt-10 text-sm font-bold">ALL INFO YOU NEED. RIGHT ON ONE PAGE.</p>
           </div>
         </div>
@@ -86,13 +75,10 @@ export default function StartOlostep() {
           />
           <Button
             onClick={handleScrape}
-            className={`${buttonColor} text-black p-2 rounded-full hover:bg-gray-300 transition-colors`}
+            className="bg-gray-600 text-black p-2 rounded-full hover:bg-gray-300 transition-colors"
           >
             &#10148;
           </Button>
-        </div>
-        <div className="text-2xl mt-4">
-          <i className="fab fa-github"></i>
         </div>
       </div>
 
@@ -105,7 +91,7 @@ export default function StartOlostep() {
                 <CircularProgress size={24} />
               </div>
             ) : (
-              <p className="text-gray-500 text-center">{output || "Scraped text generates here..."}</p>
+              <p className="text-gray-500 text-center">{output || 'Scraped text generates here...'}</p>
             )}
           </div>
         </div>
