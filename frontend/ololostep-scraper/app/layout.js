@@ -2,6 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/Navbar";
 import "./globals.css"; // Adjust the path if needed
+import { Providers } from './Providers';
 
 export const metadata = {
   title: "Create Next App",
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <Providers>
       <html lang="en">
         <body>
           <ThemeProvider
@@ -26,6 +27,6 @@ export default function RootLayout({ children }) {
           </ThemeProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </Providers>
   );
 }
